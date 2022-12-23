@@ -8,7 +8,8 @@ session_start();
 if (empty($_SESSION['user'])) {
     header("LOCATION:login.php");
 }
-
+$message = "";
+$error = "";
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
 
@@ -23,8 +24,9 @@ if (isset($_POST['id'])) {
     if ($upload) {
         $ins = new insert();
         $ins->roomimg('room_img', $imgname, $id);
+        $message = "Data saved";
     }
-}
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,7 +144,12 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <!-- Default box -->
                             <div class="card">
-
+                                <?php if (!empty($message)) : ?>
+                                    <div style="background-color: rgba(0,0,255, .1); ">
+                                        <?= "<h5> - $message </h5>"; ?>
+                                    </div>
+                                <?php endif; ?>
+                                
                                 <div class="card-body">
                                     <form action="roomimgs.php" method="POST" enctype="multipart/form-data">
                                         <div class="card-body">
@@ -150,7 +157,7 @@ if (isset($_POST['id'])) {
                                                 <label for="exampleInputEmail1"></label>
                                                 <input type="file" name="img" class="form-control" id="exampleInputEmail1" placeholder="choose image">
                                             </div>
-                                            
+
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">room id</label>
                                                 <input type="number" name="id" class="form-control" id="exampleInputEmail1" placeholder="room id">

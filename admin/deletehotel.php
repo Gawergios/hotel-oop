@@ -7,8 +7,6 @@ if (empty($_SESSION['user'])) {
 
 $id=$_GET['id'];
 $del = new delete();
-$del->delete("rooms","$id");
+$del->delete("hotels","$id");
 
-header("LOCATION:allrooms.php");
-
-?>
+header("LOCATION:allhotels.php");

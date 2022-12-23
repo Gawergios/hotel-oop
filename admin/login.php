@@ -5,7 +5,7 @@ require_once("lib/authcontroller.php");
 
 session_start();
 
-
+$error = "";
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -17,6 +17,8 @@ if (isset($_POST['login'])) {
     if (isset($userdata) > 0) {
         $_SESSION['user'] = $userdata;
         header("LOCATION:addhotels.php");
+    } else {
+        $error = "User Not Registered";
     }
 }
 
@@ -36,6 +38,12 @@ if (isset($_POST['login'])) {
 <body>
     <div class="container">
         <div class="row">
+            <?php if (!empty($error)) : ?>
+                <div style="background-color: rgba(255,0,0, .1); ">
+                    <h5>Alert!</h5>
+                    <?= "<p> - $error </p>";?>
+                </div>
+            <?php endif; ?>
             <div class="col-md-4">
                 <form action="login.php" method="POST" class="form-group">
                     <input type="email" name="email" class="form-control" placeholder="email">
@@ -53,6 +61,5 @@ if (isset($_POST['login'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
     </script>
 </body>
+
 </html>
-
-

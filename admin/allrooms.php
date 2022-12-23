@@ -158,6 +158,7 @@ $all->innerjoin("hotels", "rooms", "id", "hotel_id");
                                                         <th>taxes type</th>
                                                         <th>total</th>
                                                         <th>currency</th>
+                                                        <th>image</th>
                                                         <th>update</th>
                                                         <th>delete</th>
                                                     </tr>
@@ -175,7 +176,8 @@ $all->innerjoin("hotels", "rooms", "id", "hotel_id");
                                                             <td><?= $data['taxes_type']; ?></td>
                                                             <td><?= $data['total']; ?></td>
                                                             <td><?= $data['currency']; ?></td>
-                                                            <td><a href="update.php?id=<?= $data['id']; ?>"> update</a></td>
+                                                            <td><img width="50px" height="50px" src="../img/<?= $data['img']; ?>"></td>
+                                                            <td><a href="updaterooms.php?id=<?= $data['id']; ?>"> update</a></td>
                                                             <td><a href="deleteroom.php?id=<?= $data['id']; ?>"> delete</a></td>
                                                         </tr>
                                                     <?php endforeach; ?>
@@ -192,6 +194,7 @@ $all->innerjoin("hotels", "rooms", "id", "hotel_id");
                                                         <th>taxes type</th>
                                                         <th>total</th>
                                                         <th>currency</th>
+                                                        <th>image</th>
                                                         <th>update</th>
                                                         <th>delete</th>
                                                     </tr>

@@ -3,11 +3,13 @@
 require_once("lib/controller.php");
 
 session_start();
-
 if (empty($_SESSION['user'])) {
     header("LOCATION:login.php");
 }
-if (isset($_POST['save'])) {
+$error = "";
+$success = "";
+if (isset($_POST['save']) && isset($_POST['stars']) && isset($_POST['description'])) {
+
     $hotel_name = $_POST['name'];
     $stars = $_POST['stars'];
     $description = $_POST['description'];
@@ -19,12 +21,14 @@ if (isset($_POST['save'])) {
     $imgtype = $_FILES['img']['type'];
     $upload = move_uploaded_file($tmp, "../img/" . $imgname);
 
-if ($upload){
-    $ins = new insert();
-    $ins->hotel($hotel_name, $stars, $description,$imgname);
-     header("LOCATION:allhotels.php");
-}
-    
+    if ($upload) {
+        $ins = new insert();
+        $ins->hotel($hotel_name, $stars, $description, $imgname);
+        $success = "Data saved";
+        
+    } else {
+        $error = "fill in all data right";
+    }
 }
 
 ?>
@@ -144,7 +148,17 @@ if ($upload){
                         <div class="col-12">
                             <!-- Default box -->
                             <div class="card">
-
+                                <?php if (!empty($error)) : ?>
+                                    <div style="background-color: rgba(255,0,0, .1); ">
+                                        <h5>Alert!</h5>
+                                        <?= "<p> - $error </p>"; ?>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if (!empty($success)) : ?>
+                                    <div style="background-color: rgba(0,0,255, .1); ">
+                                        <?= "<h5> - $success </h5>"; ?>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="card-body">
                                     <form action="addhotels.php" method="post" enctype="multipart/form-data">
                                         <div class="card-body">
@@ -181,11 +195,7 @@ if ($upload){
         </div>
         <!-- /.content-wrapper -->
 
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.2.0
-            </div>
-        </footer>
+       
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">

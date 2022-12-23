@@ -128,7 +128,7 @@ $all->select("hotels");
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>view all</h1>
+                            <h1>all hotels</h1>
                         </div>
 
                     </div>
@@ -151,6 +151,9 @@ $all->select("hotels");
                                                     <th>hotel name</th>
                                                     <th>stars</th>
                                                     <th>description</th>
+                                                    <th>image</th>
+                                                    <th>update</th>
+                                                    <th>delete</th>
                                                 </tr>
                                             </thead>
 
@@ -161,13 +164,11 @@ $all->select("hotels");
                                                         <td><?= $data['name']; ?></td>
                                                         <td><?= $data['stars']; ?></td>
                                                         <td><?= $data['description']; ?></td>
-                                                        <!-- <td><?= $data['created_at']; ?></td>
                                                         <td><img width="50px" height="50px" src="../img/<?= $data['img']; ?>"></td>
-                                                        <td><?= $data['user_id']; ?></td>
-                                                        <td><a href="update.php?id=<?= $data['id']; ?>"> update</a></td>
-                                                        <td><a href="deletepost.php?id=<?= $data['id']; ?>"> delete</a></td> -->
-                                                    </tr>
-                                                <?php endforeach; ?>
+                                                        <td><a href="updatehotels.php?id=<?= $data['id']; ?>"> update</a></td>
+                                                        <td><a href="deletehotel.php?id=<?= $data['id']; ?>"> delete</a></td>
+
+                                                    <?php endforeach; ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -175,6 +176,10 @@ $all->select("hotels");
                                                     <th> name</th>
                                                     <th>stars</th>
                                                     <th>description</th>
+                                                    <th>image</th>
+                                                    <th>update</th>
+                                                    <th>delete</th>
+
                                                 </tr>
                                             </tfoot>
                                         </table>

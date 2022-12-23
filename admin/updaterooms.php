@@ -8,17 +8,15 @@ if (empty($_SESSION['user'])) {
     header("LOCATION:login.php");
 }
 
-$id = $_GET['id'];
 
-
-
-if (isset($id)) {
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
     $value = new selectall();
-    $value->select("rooms where id =$id");
-
+    $value->selectwhere("rooms", "$id");
     foreach ($value->q as $data) {
+        $id = $data['id'];
     }
-} elseif (isset($_POST['update'])) {
+}elseif(isset($_POST['update'])) {
 
     $id = $_POST['id'];
     $hotel_id = $_POST['hotel_id'];
@@ -26,23 +24,14 @@ if (isset($id)) {
     $net = $_POST['net_price'];
     $amount = $_POST['amount'];
     $currency = $_POST['currency'];
-    $type = $_POST['type'];
+    $taxes_type = $_POST['taxes_type'];
     $total = $net + $amount;
 
-
-
+    
     $update = new update();
-    $update->update($code, $net, $amount, $type, $total, $currency, $hotel_id, $id);
+    $update->updaterooms($code, $net, $amount, $taxes_type, $total, $currency, $hotel_id, $id);
+    
 
-    // if (isset($_FILES['img'])) {
-    //     $imgname = $_FILES['img']['name'];
-    //     $tmp = $_FILES['img']['tmp_name'];
-    //     $type = $_FILES['img']['type'];
-    //     $size = $_FILES['img']['size'];
-    //     $error = $_FILES['img']['error'];
-
-    //     $upload = move_uploaded_file($tmp, "../img/" . $imgname);
-    // }
     $aff = mysqli_affected_rows($update->con);
     if ($aff) {
         header("LOCATION:allrooms.php");
@@ -119,9 +108,22 @@ if (isset($id)) {
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="hotelimgs.php" class="nav-link">
+                                    <i class="nav-icon far fa-circle text-danger"></i>
+                                    <p>add hotel imgs</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="addrooms.php" class="nav-link">
                                     <i class="nav-icon far fa-circle text-danger"></i>
                                     <p>add rooms</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="roomimgs.php" class="nav-link">
+                                    <i class="nav-icon far fa-circle text-danger"></i>
+                                    <p>add room imgs</p>
                                 </a>
                             </li>
 
@@ -134,7 +136,7 @@ if (isset($id)) {
 
                             <li class="nav-item">
                                 <a href="allrooms.php" class="nav-link">
-                                    <i class="nav-icon far fa-circle text-warning"></i>
+                                    <i class="nav-icon far fa-circle text-danger"></i>
                                     <p>All rooms</p>
                                 </a>
                             </li>
@@ -157,41 +159,33 @@ if (isset($id)) {
                                 <div class="card">
 
                                     <div class="card-body">
-                                        <form action="update.php" method="POST" enctype="multipart/form-data">
+                                        <form action="updaterooms.php" method="POST" enctype="multipart/form-data">
                                             <div class="card-body">
 
 
                                                 <div class="card-body">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">hotel id</label>
-                                                        <input type="hidden" name="id" value="<?= $data['id'] ?>">
-                                                        <input type="number" name="hotel_id" value="<?= $data["hotel_id"] ?>" class="form-control" id="exampleInputEmail1" placeholder="hotel id">
+                                                        <input type="hidden" name="id" value="<?= $_GET['id'] ;?>">
+                                                        <input type="number" name="hotel_id" value="<?= $data["hotel_id"] ;?>" class="form-control" id="exampleInputEmail1" placeholder="hotel id">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">room code</label>
-                                                        <input type="text" name="code" value="<?= $data["code"] ?>" class="form-control" id="exampleInputEmail1" placeholder="room code">
+                                                        <input type="text" name="code" value="<?= $data["code"];?>" class="form-control" id="exampleInputEmail1" placeholder="room code">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputPassword1">net price</label>
-                                                        <input type="number" name="net_price" value="<?= $data["net_price"] ?>" class="form-control" id="exampleInputEmail1" placeholder="net price">
+                                                        <input type="number" name="net_price" value="<?= $data["net_price"] ;?>" class="form-control" id="exampleInputEmail1" placeholder="net price">
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">taxes </label>
-                                                        <input type="number" name="amount" value="<?= $data["taxes"] ?>" class="form-control" id="exampleInputEmail1" placeholder="amount">
-                                                        <input type="text" name="currency" value="<?= $data["currency"] ?>" class="form-control" id="exampleInputEmail1" placeholder="currency">
-                                                        <input type="text" name="type" value="<?= $data["taxes_type"] ?>" class="form-control" id="exampleInputEmail1" placeholder="type">
+                                                        <input type="number" name="amount" value="<?= $data["taxes"] ;?>" class="form-control" id="exampleInputEmail1" placeholder="amount">
+                                                        <input type="text" name="currency" value="<?= $data["currency"] ;?>" class="form-control" id="exampleInputEmail1" placeholder="currency">
+                                                        <input type="text" name="taxes_type" value="<?= $data["taxes_type"] ;?>" class="form-control" id="exampleInputEmail1" placeholder="type">
                                                     </div>
+                                                    
 
-                                                    <!-- <div class="form-group">
-                                                    <label for="exampleInputFile">img</label>
-                                                    <div class="input-group">
-                                                        <div class="custom-file">
-                                                            <input type="file" name="img" class="custom-file-input" id="exampleInputFile">
-                                                            <label class="custom-file-label" for="exampleInputFile">Choose img</label>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                                 </div>
 
                                                 <div class="card-footer">

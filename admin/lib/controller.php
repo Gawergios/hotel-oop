@@ -42,19 +42,18 @@ class selectall extends controller
     function select($table)
     {
         $this->q = mysqli_query($this->con, "SELECT * FROM $table");
-        // foreach ($this->q as $data) {
-        //     echo "<pre>";
-        //     print_r($data);
-        // }
+        
+    }
+
+    function selectwhere($table,$id)
+    {
+        $this->q = mysqli_query($this->con, "SELECT * FROM $table WHERE id=$id ");
     }
 
     function innerjoin($table1, $table2, $col1, $col2)
     {
         $this->q = mysqli_query($this->con, "SELECT * FROM `$table1` INNER JOIN `$table2` where $table1.$col1 = $table2.$col2 ");
-    // foreach ($this->q as $data) {
-    //     echo "<pre>";
-    //     print_r($data);
-   //}
+    
 }
 function innerjoinimg($img ,$table1, $table2, $col1, $col2)
     {
@@ -64,30 +63,24 @@ function innerjoinimg($img ,$table1, $table2, $col1, $col2)
 
 
 class update extends controller
+
 {
     public $q;
-    function update( $code,$net_price, $taxes,$taxes_type,$total,$currency, $hotel_id,$id)
+    function updaterooms( $code,$net_price, $taxes , $taxes_type ,$total,$currency, $hotel_id,$id)
     {
-        $this->q = mysqli_query($this->con, "UPDATE `rooms` SET `code`='$code',`net_price`='$net_price',`taxes`='$taxes',`taxes_type`='$taxes_type',`total`='$total',`currency`='$currency',`hotel_id`='$hotel_id' WHERE `id`='$id'");
+        $this->q = mysqli_query($this->con, "UPDATE `rooms` SET `code`='$code',`net_price`='$net_price',`taxes`='$taxes', `taxes_type` = '$taxes_type' , `total`='$total' , `currency`='$currency' ,`hotel_id`='$hotel_id' WHERE `id`='$id'");
         
+    }
+
+    function updatehotels($name, $stars, $description, $id)
+    {
+        $this->q = mysqli_query($this->con, "UPDATE `hotels` SET `name`='$name' , `stars`='$stars' , `description`='$description' WHERE `id`='$id'");
     }
 }
 
 
 
 
-// class selectid extends dbconnection
-// {
-//     public $q;
-//     function select($table,$id,$idreq)
-//     {
-//         $this->q = mysqli_query($this->con, "select `id` from $table where $id = '$idreq'");
-//         foreach ($this->q as $data) {
-//             echo "<pre>";
-//             print_r($data);
-//         }
-//     }
-// }
 
 
 
@@ -100,44 +93,3 @@ class delete extends controller{
 }
 
 
-// $con = new mysqli("localhost", "root", "", "blog");
-// $q = $con->query("select * from `post`");
-
-
-
-
-
-// function addNewUser($userName,$email,$password){
-//     $connect = mysqli_connect("localhost", "root", "", "portfolio");
-//     $query = "INSERT INTO `user`(`name`, `email`, `password`) VALUES ('$userName','$email','$password')";
-//     mysqli_query($connect, $query);
-
-//     $aff = mysqli_affected_rows($connect);
-//     if ($aff == 1) {
-//         header("LOCATION:home.php");
-//     } else {
-//         return false;
-//     }
-// }
-
-// function login($email, $password)
-// {
-//     $connect = mysqli_connect("localhost", "root", "", "portfolio");
-//     $query = "SELECT * FROM `user` WHERE `email` = '$email' && `password` = '$password'";
-//     $myq = mysqli_query($connect, $query);
-//     $res= mysqli_fetch_assoc($myq);
-//     return $res;
-
-// }
-
-
-
-
-interface core
-{
-
-    public function select();
-    public function update($data, $where);
-    public function delete($where);
-    public function insert($data);
-}

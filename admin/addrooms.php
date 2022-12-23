@@ -176,17 +176,6 @@ if ($upload){
                                                 <input type="file" name="img" class="form-control" id="exampleInputEmail1" placeholder="choose image">
                                                 </div>
 
-
-
-                                                <!-- <div class="form-group">
-                                                    <label for="exampleInputFile">img</label>
-                                                    <div class="input-group">
-                                                        <div class="custom-file">
-                                                            <input type="file" name="img" class="custom-file-input" id="exampleInputFile">
-                                                            <label class="custom-file-label" for="exampleInputFile">Choose img</label>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                             </div>
 
                                             <div class="card-footer">
